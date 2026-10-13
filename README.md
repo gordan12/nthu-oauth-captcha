@@ -1,14 +1,19 @@
 # 清大 OAuth 驗證碼自動填入
 
-在清大校務資訊系統 OAuth 登入頁自動辨識並填入 4 位驗證碼。適用於 eeclass 等會導向 `oauth.ccxp.nthu.edu.tw` 的登入。
+給 Edge 用的登入小外掛。驗證碼辨識模型不是這個 repo 訓練的，權重直接使用 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen，Apache License 2.0）。
 
-帳號和密碼仍由瀏覽器自己的密碼管理填入。這個外掛只填驗證碼，不會讀取或送出帳號密碼，也不會代按登入。
+用 Chrome、而且只想裝現成擴充功能的話，用他們的專案即可。他們另外附了訓練程式、驗證碼產生器和 Chrome 線上應用程式商店的安裝方式。
 
-只作用於：
+這個 repo 只留同學從 GitHub 下載後，在 Edge 載入的那一份外掛。
 
-`https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`
+## 這個 repo 自己寫的部分
 
-校務系統首頁 `www.ccxp.nthu.edu.tw` 的 6 位驗證碼不在範圍內。
+- 單一 content script：頁面出現驗證碼就辨識，按重新整理換成新圖後再辨識一次。
+- 驗證碼欄原本是 `type="number"`，`0123` 這類開頭是 0 的驗證碼會被瀏覽器收成 `123`。填入前會改成文字欄，把 4 個字完整留下。
+- 只寫入驗證碼欄。帳號、密碼留給瀏覽器的密碼管理，也不會代按登入。
+- 打包進來的 TensorFlow.js 已經沒有 `tensor.toFloat()`。推論改用 `tf.cast` 把像素轉成 0–1，否則模型載入後會在填入前就失敗。
+
+`model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。
 
 ## 安裝
 
@@ -20,6 +25,4 @@
 
 若某一張圖填錯，按驗證碼旁邊的重新整理圖示，外掛會換一張再辨識。
 
-## 授權
-
-辨識模型與打包的 TensorFlow.js 來自 [NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen），採用 Apache License 2.0。授權全文在 `APACHE-2.0.txt`。
+只作用於 `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`。校務系統首頁 `www.ccxp.nthu.edu.tw` 的 6 位驗證碼不在範圍內。
