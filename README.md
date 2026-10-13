@@ -1,6 +1,6 @@
 # 清大 OAuth 驗證碼自動填入
 
-給 Edge、Chrome、macOS Safari 和 iPad / iPhone Safari 用的登入小外掛。驗證碼辨識模型不是這個 repo 訓練的，權重直接使用 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen，Apache License 2.0）。
+給 Edge、Chrome、macOS Safari、iPad / iPhone Safari 和 Android Chrome 用的登入小外掛。驗證碼辨識模型不是這個 repo 訓練的，權重直接使用 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen，Apache License 2.0）。
 
 用 Chrome、而且只想裝現成擴充功能的話，用他們的專案即可。他們另外附了訓練程式、驗證碼產生器和 Chrome 線上應用程式商店的安裝方式。
 
@@ -14,13 +14,14 @@
 - 只寫入驗證碼欄。帳號、密碼留給瀏覽器的密碼管理，也不會代按登入。
 - 打包進來的 TensorFlow.js 已經沒有 `tensor.toFloat()`。推論改用 `tf.cast` 把像素轉成 0–1，否則模型載入後會在填入前就失敗。
 
-`model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。`safari/` 是 Xcode 的 Safari 包裝 App，直接引用根目錄的同一份外掛檔案，不另外複製。`.github/workflows/safari.yml` 負責把它建好附到 Release。`userscript/` 是給 iPad 用的使用者腳本，由 `userscript/build.sh` 從 `content.js` 產生。
+`model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。`safari/` 是 Xcode 的 Safari 包裝 App，直接引用根目錄的同一份外掛檔案，不另外複製。`.github/workflows/safari.yml` 負責把它建好附到 Release。`userscript/` 是給 iPad 用的使用者腳本，由 `userscript/build.sh` 從 `content.js` 產生。`bookmarklet/` 是給 Android Chrome 書籤載入的腳本，由 `bookmarklet/build.sh` 從 `content.js` 產生。
 
 ## 下載
 
 - Edge / Chrome：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-chrome-*.zip`
 - macOS Safari：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-safari-*.zip`
 - iPad / iPhone Safari：[nthu-oauth-captcha.user.js](https://raw.githubusercontent.com/gordan12/nthu-oauth-captcha/main/userscript/nthu-oauth-captcha.user.js)（要先裝 Userscripts，見下面的安裝步驟）
+- Android Chrome：不用下載檔案，照下面的安裝步驟新增一個書籤
 
 ## 安裝
 
@@ -54,6 +55,23 @@ iPad 的 Safari 不能直接載入外掛檔案，這裡改用免費的 Userscrip
 3. 用 Safari 打開上面「下載」裡的 `nthu-oauth-captcha.user.js` 連結，從網址列的延伸功能選單點 Userscripts，按安裝。
 4. 打開清大 OAuth 登入頁，Safari 問 Userscripts 的權限時選允許。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
+### Android Chrome
+
+Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤，書籤會載入同一份程式。TensorFlow.js 和模型每次從 jsDelivr 下載，第一張圖要等幾秒。
+
+1. 複製下面整行：
+
+   ```
+   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@main/bookmarklet/nthu-oauth-captcha.js';document.body.appendChild(s);})()
+   ```
+
+2. 在 Chrome 隨便打開一個網頁，按右上角**選單 → 星號**加入書籤。
+3. 按**選單 → 書籤**，找到剛剛那個書籤，長按後選**編輯**。名稱改成好打的字，例如 `nthucaptcha`；網址整個刪掉，貼上第 1 步複製的那行，存檔。
+4. 打開清大 OAuth 登入頁，點網址列，輸入 `nthucaptcha`，點建議清單裡有星號的那一項。從書籤選單直接點，Android Chrome 不會執行它，一定要從網址列點。
+5. 驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
+
+書籤不會自己執行，每次打開登入頁都要點一次。在別的網頁點，會跳出提示，不會做任何事。
+
 ## 使用
 
 若某一張圖填錯，按驗證碼旁邊的重新整理圖示，外掛會換一張再辨識。
@@ -64,6 +82,6 @@ iPad 的 Safari 不能直接載入外掛檔案，這裡改用免費的 Userscrip
 
 想自己建 Safari App 的話，用 Xcode 打開 `safari/NTHU OAuth Captcha/NTHU OAuth Captcha.xcodeproj`，按 **Product → Run**，代替 macOS Safari 安裝的第 1、2 步，不需要 Apple 開發者帳號。
 
-改了 `content.js` 之後，跑一次 `userscript/build.sh` 重新產生 iPad 用的使用者腳本。
+改了 `content.js` 之後，跑一次 `userscript/build.sh` 和 `bookmarklet/build.sh`，重新產生 iPad 用的使用者腳本和 Android 用的書籤腳本。書籤從 jsDelivr 讀 `main` 上的檔案，jsDelivr 最多會快取 12 小時；推上去後想馬上生效，打開 `https://purge.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@main/bookmarklet/nthu-oauth-captcha.js` 清掉快取。
 
 發佈新版（需要這個 repo 的寫入權限）：推一個 `v` 開頭的標籤（例如 `git tag v1.0.1 && git push origin v1.0.1`），GitHub Actions 會把 Edge / Chrome 的 zip 和 Safari App 一起附到同名的 Release。Safari App 同時支援 Apple 晶片和 Intel。fork 的話要先在 fork 的 **Actions** 頁面啟用，Release 會建在自己的 fork。
