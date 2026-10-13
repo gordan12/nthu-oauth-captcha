@@ -17,7 +17,7 @@
         "vendor/tfjs-layers.min.js",
         "content.js"
       ],
-      "run_at": "document_idle"
+      "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [
