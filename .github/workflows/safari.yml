@@ -1,5 +1,5 @@
-# Builds the Safari app without an Apple Developer account and attaches it to the release.
-# The app is signed to run locally only, so Safari still needs "Allow unsigned extensions".
+# Builds the Safari app and the Edge/Chrome extension, then attaches both zips to the release.
+# The Safari app is signed to run locally only, so Safari still needs "Allow unsigned extensions".
 
 name: Safari
 
@@ -47,13 +47,47 @@ jobs:
           name: safari
           path: ${{ env.ZIP }}
 
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Package
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')"
+          fi
+          stage="${RUNNER_TEMP}/nthu-oauth-captcha"
+          mkdir -p "$stage"
+          cp manifest.json content.js APACHE-2.0.txt NOTICE.txt README.md "$stage/"
+          cp -a icons model vendor "$stage/"
+          zipname="nthu-oauth-captcha-chrome-${version}.zip"
+          (cd "$RUNNER_TEMP" && zip -r "$GITHUB_WORKSPACE/$zipname" nthu-oauth-captcha)
+          echo "ZIP=$zipname" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: chrome
+          path: ${{ env.ZIP }}
+
+  release:
+    needs: [build, extension]
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          path: dist
+
       - name: Release
-        if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          mapfile -t files < <(find dist -type f -name '*.zip')
           if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" "$ZIP" --clobber
+            gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" "$ZIP" --title "$GITHUB_REF_NAME" --generate-notes
+            gh release create "$GITHUB_REF_NAME" "${files[@]}" --title "$GITHUB_REF_NAME" --generate-notes
           fi

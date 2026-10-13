@@ -4,7 +4,7 @@
 
 用 Chrome、而且只想裝現成擴充功能的話，用他們的專案即可。他們另外附了訓練程式、驗證碼產生器和 Chrome 線上應用程式商店的安裝方式。
 
-這個 repo 只留同學從 GitHub 下載後，在 Edge 或 Safari 載入的那一份外掛。
+給同學用的檔案都在 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest)，不用下載整個原始碼。
 
 ## 這個 repo 自己寫的部分
 
@@ -16,9 +16,16 @@
 
 `model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。`safari/` 是 Xcode 的 Safari 包裝 App，直接引用根目錄的同一份外掛檔案，不另外複製。`.github/workflows/safari.yml` 負責把它建好附到 Release。
 
+## 下載
+
+到 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 選對應的檔：
+
+- Edge / Chrome：`nthu-oauth-captcha-chrome-*.zip`
+- macOS Safari：`nthu-oauth-captcha-safari-*.zip`
+
 ## 安裝（Edge / Chrome）
 
-1. 按 **Code → Download ZIP**，解壓縮。
+1. 下載 `nthu-oauth-captcha-chrome-*.zip`，解壓縮。
 2. 打開 `edge://extensions`（Chrome 則是 `chrome://extensions`）。
 3. 打開**開發人員模式**。
 4. 按**載入未封裝**，選解壓後裡面有 `manifest.json` 的那個資料夾。
@@ -28,7 +35,7 @@
 
 需要 macOS 12 以上。
 
-1. 到 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 下載 `nthu-oauth-captcha-safari-*.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若下載項目裡還是 zip，雙擊就會解開。把它拖進「應用程式」。
+1. 下載 `nthu-oauth-captcha-safari-*.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若下載項目裡還是 zip，雙擊就會解開。把它拖進「應用程式」。
 2. 打開「NTHU OAuth Captcha」。macOS 會說無法確認是否含有惡意軟體，因為這個 App 沒有經過 Apple 公證。到**系統設定 → 隱私權與安全性**，往下按**仍要打開**，再打開一次。跳出的小視窗可以關掉。
 3. Safari 打開**設定 → 進階**，勾選**顯示網頁開發者功能**。
 4. 在**設定 → 開發者**勾選**允許未簽署的延伸功能**。
@@ -41,7 +48,7 @@
 
 ### 發佈新版
 
-推一個 `v` 開頭的標籤（例如 `git tag v1.0.0 && git push origin v1.0.0`），GitHub Actions 會建出同時支援 Apple 晶片和 Intel 的 App，附到同名的 Release。
+推一個 `v` 開頭的標籤（例如 `git tag v1.0.1 && git push origin v1.0.1`），GitHub Actions 會把 Edge / Chrome 的 zip 和 Safari App 一起附到同名的 Release。Safari App 同時支援 Apple 晶片和 Intel。
 
 若某一張圖填錯，按驗證碼旁邊的重新整理圖示，外掛會換一張再辨識。
 
