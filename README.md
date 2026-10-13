@@ -28,7 +28,7 @@
 
 需要 macOS 12 以上。
 
-1. 到 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 下載 `nthu-oauth-captcha-safari-*.zip`，解壓縮，把「NTHU OAuth Captcha」拖進「應用程式」。
+1. 到 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 下載 `nthu-oauth-captcha-safari-*.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若下載項目裡還是 zip，雙擊就會解開。把它拖進「應用程式」。
 2. 打開「NTHU OAuth Captcha」。macOS 會說無法確認是否含有惡意軟體，因為這個 App 沒有經過 Apple 公證。到**系統設定 → 隱私權與安全性**，往下按**仍要打開**，再打開一次。跳出的小視窗可以關掉。
 3. Safari 打開**設定 → 進階**，勾選**顯示網頁開發者功能**。
 4. 在**設定 → 開發者**勾選**允許未簽署的延伸功能**。
