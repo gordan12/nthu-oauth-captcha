@@ -1,0 +1,59 @@
+# Builds the Safari app without an Apple Developer account and attaches it to the release.
+# The app is signed to run locally only, so Safari still needs "Allow unsigned extensions".
+
+name: Safari
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    env:
+      PROJECT: safari/NTHU OAuth Captcha/NTHU OAuth Captcha.xcodeproj
+      APP: NTHU OAuth Captcha.app
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          [ "$GITHUB_REF_TYPE" = tag ] || version="$(plutil -extract version raw manifest.json)"
+          xcodebuild build \
+            -project "$PROJECT" \
+            -scheme "NTHU OAuth Captcha" \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination "generic/platform=macOS" \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
+            MARKETING_VERSION="$version"
+          echo "ZIP=nthu-oauth-captcha-safari-$version.zip" >> "$GITHUB_ENV"
+
+      - name: Package
+        run: |
+          cd build/Build/Products/Release
+          codesign --verify --deep --strict "$APP"
+          lipo -info "$APP/Contents/MacOS/NTHU OAuth Captcha"
+          ditto -c -k --keepParent "$APP" "$GITHUB_WORKSPACE/$ZIP"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: safari
+          path: ${{ env.ZIP }}
+
+      - name: Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$ZIP" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$ZIP" --title "$GITHUB_REF_NAME" --generate-notes
+          fi
