@@ -3,3 +3,4 @@
 debug-*
 sample-*.png
 xcuserdata/
+.DS_Store

@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  NTHU OAuth Captcha
 //
-//  Created by 歐睿鋐 on 2026/10/13.
-//
 
 import Cocoa
 import SafariServices
