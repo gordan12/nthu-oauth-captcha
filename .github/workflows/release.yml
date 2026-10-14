@@ -1,7 +1,9 @@
-# Builds the Safari app and the Edge/Chrome extension, then attaches both zips to the release.
+# Checks every push and pull request, and on a v* tag publishes every platform as one release.
+# Edge/Chrome and Safari get zips on the release. The iPad userscript and the Android bookmarklet
+# load from jsDelivr @latest, which follows the newest tag, so they switch over at the same time.
 # The Safari app is signed to run locally only, so Safari still needs "Allow unsigned extensions".
 
-name: Safari
+name: Release
 
 on:
   push:
@@ -14,7 +16,31 @@ permissions:
   contents: write
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Generated scripts match content.js
+        run: |
+          sh userscript/build.sh
+          sh bookmarklet/build.sh
+          if ! git diff --exit-code -- userscript bookmarklet; then
+            echo "Run userscript/build.sh and bookmarklet/build.sh, then commit the result."
+            exit 1
+          fi
+
+      - name: Tag matches manifest.json
+        if: github.ref_type == 'tag'
+        run: |
+          version="$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')"
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match manifest.json version $version."
+            exit 1
+          fi
+
   build:
+    needs: check
     if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
     runs-on: macos-15
     env:
@@ -25,8 +51,7 @@ jobs:
 
       - name: Build
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          [ "$GITHUB_REF_TYPE" = tag ] || version="$(plutil -extract version raw manifest.json)"
+          version="$(plutil -extract version raw manifest.json)"
           xcodebuild build \
             -project "$PROJECT" \
             -scheme "NTHU OAuth Captcha" \
@@ -51,20 +76,17 @@ jobs:
           path: ${{ env.ZIP }}
 
   extension:
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
       - name: Package
         run: |
-          if [ "$GITHUB_REF_TYPE" = tag ]; then
-            version="${GITHUB_REF_NAME#v}"
-          else
-            version="$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')"
-          fi
+          version="$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')"
           stage="${RUNNER_TEMP}/nthu-oauth-captcha"
           mkdir -p "$stage"
-          cp manifest.json content.js APACHE-2.0.txt NOTICE.txt README.md "$stage/"
+          cp manifest.json content.js APACHE-2.0.txt NOTICE.txt "$stage/"
           cp -a icons model vendor "$stage/"
           zipname="nthu-oauth-captcha-chrome-${version}.zip"
           (cd "$RUNNER_TEMP" && zip -r "$GITHUB_WORKSPACE/$zipname" nthu-oauth-captcha)
@@ -97,8 +119,26 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mapfile -t files < <(find dist -type f -name '*.zip')
+          cat > notes.md <<EOF
+          各平台下載哪一個：
+
+          - Edge / Chrome：下面的 \`nthu-oauth-captcha-chrome-*.zip\`
+          - macOS Safari：下面的 \`nthu-oauth-captcha-safari-*.zip\`
+          - iPad / iPhone Safari、Android Chrome：不用下載，已裝好的會自動換成這一版，安裝方式見 [README](https://github.com/$GITHUB_REPOSITORY#readme)
+
+          不要下載最底下的 **Source code**，那是整個原始碼，不是外掛。
+
+          EOF
           if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" "${files[@]}" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" "${files[@]}" --title "$GITHUB_REF_NAME" --generate-notes
+            gh release create "$GITHUB_REF_NAME" "${files[@]}" --title "$GITHUB_REF_NAME" --notes-file notes.md --generate-notes
           fi
+
+      # jsDelivr caches @latest for hours; clear it so the new tag is served right away.
+      - name: Refresh jsDelivr
+        run: |
+          for file in userscript/nthu-oauth-captcha.user.js bookmarklet/nthu-oauth-captcha.js; do
+            curl -fsS "https://purge.jsdelivr.net/gh/$GITHUB_REPOSITORY@latest/$file" \
+              || echo "::warning::Could not purge $file from jsDelivr"
+          done

@@ -22,8 +22,8 @@ VERSION=$(plutil -extract version raw manifest.json 2>/dev/null || sed -n 's/.*"
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@$TFJS/dist/tf-core.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@$TFJS/dist/tf-backend-webgl.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-layers@$TFJS/dist/tf-layers.min.js
-// @downloadURL  https://raw.githubusercontent.com/gordan12/nthu-oauth-captcha/main/userscript/nthu-oauth-captcha.user.js
-// @updateURL    https://raw.githubusercontent.com/gordan12/nthu-oauth-captcha/main/userscript/nthu-oauth-captcha.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js
+// @updateURL    https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js
 // ==/UserScript==
 
 // Generated from content.js by userscript/build.sh. Edit content.js instead.

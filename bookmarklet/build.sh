@@ -12,7 +12,7 @@ MODEL=https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@e94dec5e11529ef4c1
 {
   cat <<EOF
 // Generated from content.js by bookmarklet/build.sh. Edit content.js instead.
-// The bookmark in README.md loads this file on the NTHU OAuth login page.
+// The bookmark in README.md loads the copy at the newest tag on the NTHU OAuth login page.
 
 (() => {
 if (window.__nthuOauthCaptcha) return;
