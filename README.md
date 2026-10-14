@@ -23,6 +23,8 @@
 - iPad / iPhone Safari：[nthu-oauth-captcha.user.js](https://raw.githubusercontent.com/gordan12/nthu-oauth-captcha/main/userscript/nthu-oauth-captcha.user.js)（要先裝 Userscripts，見下面的安裝步驟）
 - Android Chrome：不用下載檔案，照下面的安裝步驟新增一個書籤
 
+不要下載 Release 頁最底下的 **Source code (zip)**。那是整個原始碼，裡面含有 Mac 的 Xcode 專案，不是給 Edge 載入的外掛。
+
 ## 安裝
 
 ### Edge / Chrome
@@ -84,4 +86,4 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 改了 `content.js` 之後，跑一次 `userscript/build.sh` 和 `bookmarklet/build.sh`，重新產生 iPad 用的使用者腳本和 Android 用的書籤腳本。書籤從 jsDelivr 讀 `main` 上的檔案，jsDelivr 最多會快取 12 小時；推上去後想馬上生效，打開 `https://purge.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@main/bookmarklet/nthu-oauth-captcha.js` 清掉快取。
 
-發佈新版（需要這個 repo 的寫入權限）：推一個 `v` 開頭的標籤（例如 `git tag v1.0.1 && git push origin v1.0.1`），GitHub Actions 會把 Edge / Chrome 的 zip 和 Safari App 一起附到同名的 Release。Safari App 同時支援 Apple 晶片和 Intel。fork 的話要先在 fork 的 **Actions** 頁面啟用，Release 會建在自己的 fork。
+發佈新版（需要這個 repo 的寫入權限）：改完程式並把 `manifest.json` 的 `version` 往上加，推上 `main`。這一步只會檢查 Edge / Chrome 的 zip，不會發新版。要發行時，在那個 commit 上推一個 `v` 開頭的標籤，例如 `git tag v1.0.2 && git push origin v1.0.2`。GitHub Actions 會在雲端打包，把 Edge / Chrome 的 zip 和 Safari App 一起附到同名的 Release，不用在自己的電腦壓檔。Safari App 同時支援 Apple 晶片和 Intel。fork 的話要先在 fork 的 **Actions** 頁面啟用，Release 會建在自己的 fork。

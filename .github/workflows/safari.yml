@@ -5,7 +5,9 @@ name: Safari
 
 on:
   push:
+    branches: [main]
     tags: ["v*"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -13,6 +15,7 @@ permissions:
 
 jobs:
   build:
+    if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
     runs-on: macos-15
     env:
       PROJECT: safari/NTHU OAuth Captcha/NTHU OAuth Captcha.xcodeproj
@@ -65,6 +68,10 @@ jobs:
           cp -a icons model vendor "$stage/"
           zipname="nthu-oauth-captcha-chrome-${version}.zip"
           (cd "$RUNNER_TEMP" && zip -r "$GITHUB_WORKSPACE/$zipname" nthu-oauth-captcha)
+          if unzip -l "$zipname" | grep -Ei 'safari|xcodeproj|\.swift|\.app/|\.plist'; then
+            echo "Edge/Chrome package contains Mac project files"
+            exit 1
+          fi
           echo "ZIP=$zipname" >> "$GITHUB_ENV"
 
       - uses: actions/upload-artifact@v7
