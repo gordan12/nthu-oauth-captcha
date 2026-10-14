@@ -14,13 +14,13 @@
 - 只寫入驗證碼欄。帳號、密碼留給瀏覽器的密碼管理，也不會代按登入。
 - 打包進來的 TensorFlow.js 已經沒有 `tensor.toFloat()`。推論改用 `tf.cast` 把像素轉成 0–1，否則模型載入後會在填入前就失敗。
 
-`model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。`safari/` 是 Xcode 的 Safari 包裝 App，直接引用根目錄的同一份外掛檔案，不另外複製。`.github/workflows/safari.yml` 負責把它建好附到 Release。`userscript/` 是給 iPad 用的使用者腳本，由 `userscript/build.sh` 從 `content.js` 產生。`bookmarklet/` 是給 Android Chrome 書籤載入的腳本，由 `bookmarklet/build.sh` 從 `content.js` 產生。
+`model/` 與 `vendor/` 來自上面那個專案，授權全文在 `APACHE-2.0.txt`。`content.js` 和 `manifest.json` 是這個外掛自己的程式。`safari/` 是 Xcode 的 Safari 包裝 App，直接引用根目錄的同一份外掛檔案，不另外複製。`.github/workflows/release.yml` 負責檢查和發佈所有平台。`userscript/` 是給 iPad 用的使用者腳本，由 `userscript/build.sh` 從 `content.js` 產生。`bookmarklet/` 是給 Android Chrome 書籤載入的腳本，由 `bookmarklet/build.sh` 從 `content.js` 產生。
 
 ## 下載
 
 - Edge / Chrome：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-chrome-*.zip`
 - macOS Safari：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-safari-*.zip`
-- iPad / iPhone Safari：[nthu-oauth-captcha.user.js](https://raw.githubusercontent.com/gordan12/nthu-oauth-captcha/main/userscript/nthu-oauth-captcha.user.js)（要先裝 Userscripts，見下面的安裝步驟）
+- iPad / iPhone Safari：[nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js)（要先裝 Userscripts，見下面的安裝步驟）
 - Android Chrome：不用下載檔案，照下面的安裝步驟新增一個書籤
 
 不要下載 Release 頁最底下的 **Source code (zip)**。那是整個原始碼，裡面含有 Mac 的 Xcode 專案，不是給 Edge 載入的外掛。
@@ -64,7 +64,7 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 1. 複製下面整行：
 
    ```
-   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@main/bookmarklet/nthu-oauth-captcha.js';document.body.appendChild(s);})()
+   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/bookmarklet/nthu-oauth-captcha.js';document.body.appendChild(s);})()
    ```
 
 2. 在 Chrome 隨便打開一個網頁，按右上角**選單 → 星號**加入書籤。
@@ -84,6 +84,8 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 想自己建 Safari App 的話，用 Xcode 打開 `safari/NTHU OAuth Captcha/NTHU OAuth Captcha.xcodeproj`，按 **Product → Run**，代替 macOS Safari 安裝的第 1、2 步，不需要 Apple 開發者帳號。
 
-改了 `content.js` 之後，跑一次 `userscript/build.sh` 和 `bookmarklet/build.sh`，重新產生 iPad 用的使用者腳本和 Android 用的書籤腳本。書籤從 jsDelivr 讀 `main` 上的檔案，jsDelivr 最多會快取 12 小時；推上去後想馬上生效，打開 `https://purge.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@main/bookmarklet/nthu-oauth-captcha.js` 清掉快取。
+改了 `content.js` 之後，跑一次 `userscript/build.sh` 和 `bookmarklet/build.sh`，重新產生 iPad 用的使用者腳本和 Android 用的書籤腳本，一起 commit。忘了跑的話，PR 和 `main` 上的檢查會失敗。
 
-發佈新版（需要這個 repo 的寫入權限）：改完程式並把 `manifest.json` 的 `version` 往上加，推上 `main`。這一步只會檢查 Edge / Chrome 的 zip，不會發新版。要發行時，在那個 commit 上推一個 `v` 開頭的標籤，例如 `git tag v1.0.2 && git push origin v1.0.2`。GitHub Actions 會在雲端打包，把 Edge / Chrome 的 zip 和 Safari App 一起附到同名的 Release，不用在自己的電腦壓檔。Safari App 同時支援 Apple 晶片和 Intel。fork 的話要先在 fork 的 **Actions** 頁面啟用，Release 會建在自己的 fork。
+每個 PR 和推上 `main` 的 commit 都會打包一份 Edge / Chrome 的 zip，在那次執行的 **Actions** 頁面最下面可以下載，合併前就能實測。
+
+發佈新版（需要這個 repo 的寫入權限）：把 `manifest.json` 的 `version` 往上加，推上 `main`，再在那個 commit 上推同名的 `v` 開頭標籤，例如 `git tag v1.0.2 && git push origin v1.0.2`。標籤和 `version` 對不上時不會發佈。所有平台都用同一個版本號一起發：GitHub Actions 把 Edge / Chrome 的 zip 和 Safari App 附到同名的 Release；iPad 的使用者腳本和 Android 的書籤從 jsDelivr 的 `@latest` 載入，它跟著最新的標籤走，Actions 發佈後會清掉 jsDelivr 的快取，所以也在同一刻換成新版。只推到 `main` 不會影響任何使用者。只改到某個平台時也照樣整組發，在 Release 說明寫明哪些平台有變。Safari App 同時支援 Apple 晶片和 Intel。
