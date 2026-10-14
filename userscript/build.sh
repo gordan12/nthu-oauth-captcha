@@ -21,6 +21,7 @@ VERSION=$(plutil -extract version raw manifest.json 2>/dev/null || sed -n 's/.*"
 // @inject-into  content
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@$TFJS/dist/tf-core.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@$TFJS/dist/tf-backend-webgl.min.js
+// @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-cpu@$TFJS/dist/tf-backend-cpu.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-layers@$TFJS/dist/tf-layers.min.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js
 // @updateURL    https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js

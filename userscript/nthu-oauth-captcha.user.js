@@ -7,6 +7,7 @@
 // @inject-into  content
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.2.0/dist/tf-core.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@4.2.0/dist/tf-backend-webgl.min.js
+// @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-cpu@4.2.0/dist/tf-backend-cpu.min.js
 // @require      https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-layers@4.2.0/dist/tf-layers.min.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js
 // @updateURL    https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js
