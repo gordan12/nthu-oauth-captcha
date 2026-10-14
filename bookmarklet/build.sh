@@ -44,6 +44,7 @@ const load = (path) =>
 const libraries = typeof tf === "undefined"
   ? load("tfjs-core@$TFJS/dist/tf-core.min.js")
       .then(() => load("tfjs-backend-webgl@$TFJS/dist/tf-backend-webgl.min.js"))
+      .then(() => load("tfjs-backend-cpu@$TFJS/dist/tf-backend-cpu.min.js"))
       .then(() => load("tfjs-layers@$TFJS/dist/tf-layers.min.js"))
   : Promise.resolve();
 
