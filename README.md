@@ -18,28 +18,30 @@
 
 ## 下載
 
-- Edge / Chrome：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-chrome-*.zip`
-- macOS Safari：[Releases](https://github.com/gordan12/nthu-oauth-captcha/releases/latest) 裡的 `nthu-oauth-captcha-safari-*.zip`
+- Edge / Chrome：[nthu-oauth-captcha-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-chrome.zip)
+- macOS Safari：[nthu-oauth-captcha-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-safari.zip)
 - iPad / iPhone Safari：[nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js)（要先裝 Userscripts，見下面的安裝步驟）
 - Android Chrome：不用下載檔案，照下面的安裝步驟新增一個書籤
 
-不要下載 Release 頁最底下的 **Source code (zip)**。那是整個原始碼，裡面含有 Mac 的 Xcode 專案，不是給 Edge 載入的外掛。
+上面兩個連結永遠指向最新版。舊版在 [Releases](https://github.com/gordan12/nthu-oauth-captcha/releases)，從 Release 頁下載時不要選最底下的 **Source code (zip)**，那是整個原始碼，不是外掛。
 
 ## 安裝
 
 ### Edge / Chrome
 
-1. 下載 `nthu-oauth-captcha-chrome-*.zip`，解壓縮。
+1. 下載 `nthu-oauth-captcha-chrome.zip`，按右鍵選**全部解壓縮**。解壓後把 zip 刪掉，下次更新才會解壓到同一個資料夾。
 2. 打開 `edge://extensions`（Chrome 則是 `chrome://extensions`）。
 3. 打開**開發人員模式**。
-4. 按**載入未封裝**，選解壓後裡面有 `manifest.json` 的那個資料夾。
+4. 按**載入未封裝**，選解壓出來的 `nthu-oauth-captcha-chrome` 資料夾。
 5. 打開清大 OAuth 登入頁。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
+
+更新時，下載新版 zip，同樣全部解壓縮並取代舊檔案，再到 `edge://extensions` 按這個外掛的重新載入圖示。1.0.2 以前的版本解壓後有兩層資料夾，從那些版本更新時，先在擴充功能頁移除舊的外掛，再照上面的步驟裝一次。
 
 ### macOS Safari
 
 需要 macOS 12 以上。
 
-1. 下載 `nthu-oauth-captcha-safari-*.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若下載項目裡還是 zip，雙擊就會解開。把它拖進「應用程式」。
+1. 下載 `nthu-oauth-captcha-safari.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若下載項目裡還是 zip，雙擊就會解開。把它拖進「應用程式」。
 2. 打開「NTHU OAuth Captcha」。macOS 會說無法確認是否含有惡意軟體，因為這個 App 沒有經過 Apple 公證。到**系統設定 → 隱私權與安全性**，往下按**仍要打開**，再打開一次。跳出的小視窗可以關掉。
 3. Safari 打開**設定 → 進階**，勾選**顯示網頁開發者功能**。
 4. 在**設定 → 開發者**勾選**允許未簽署的延伸功能**。
@@ -47,6 +49,8 @@
 6. 打開清大 OAuth 登入頁，按網址列旁的外掛圖示，選**在此網站上一律允許**。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 「允許未簽署的延伸功能」在 Safari 每次結束後會自動取消，重開 Safari 後要再勾一次。要免掉這一步，App 得用付費的 Apple 開發者帳號簽章；或者改照下面 iPad / iPhone 的 Userscripts 做法，Mac 的 Safari 也適用，不用每次重開都勾。
+
+更新時，把新版拖進「應用程式」，選取代，再打開 App 一次。
 
 ### iPad / iPhone Safari
 

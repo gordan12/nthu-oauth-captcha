@@ -61,7 +61,7 @@ jobs:
             ARCHS="arm64 x86_64" \
             ONLY_ACTIVE_ARCH=NO \
             MARKETING_VERSION="$version"
-          echo "ZIP=nthu-oauth-captcha-safari-$version.zip" >> "$GITHUB_ENV"
+          echo "ZIP=nthu-oauth-captcha-safari.zip" >> "$GITHUB_ENV"
 
       - name: Package
         run: |
@@ -83,13 +83,14 @@ jobs:
 
       - name: Package
         run: |
-          version="$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')"
           stage="${RUNNER_TEMP}/nthu-oauth-captcha"
           mkdir -p "$stage"
           cp manifest.json content.js APACHE-2.0.txt NOTICE.txt "$stage/"
           cp -a icons model vendor "$stage/"
-          zipname="nthu-oauth-captcha-chrome-${version}.zip"
-          (cd "$RUNNER_TEMP" && zip -r "$GITHUB_WORKSPACE/$zipname" nthu-oauth-captcha)
+          # Files sit at the top of the zip, so Windows "Extract All" gives one folder with manifest.json inside.
+          # The name has no version, so each update extracts over the same folder.
+          zipname="nthu-oauth-captcha-chrome.zip"
+          (cd "$stage" && zip -r "$GITHUB_WORKSPACE/$zipname" .)
           if unzip -l "$zipname" | grep -Ei 'safari|xcodeproj|\.swift|\.app/|\.plist'; then
             echo "Edge/Chrome package contains Mac project files"
             exit 1
@@ -122,8 +123,8 @@ jobs:
           cat > notes.md <<EOF
           各平台下載哪一個：
 
-          - Edge / Chrome：下面的 \`nthu-oauth-captcha-chrome-*.zip\`
-          - macOS Safari：下面的 \`nthu-oauth-captcha-safari-*.zip\`
+          - Edge / Chrome：下面的 \`nthu-oauth-captcha-chrome.zip\`
+          - macOS Safari：下面的 \`nthu-oauth-captcha-safari.zip\`
           - iPad / iPhone Safari、Android Chrome：不用下載，已裝好的會自動換成這一版，安裝方式見 [README](https://github.com/$GITHUB_REPOSITORY#readme)
 
           不要下載最底下的 **Source code**，那是整個原始碼，不是外掛。
