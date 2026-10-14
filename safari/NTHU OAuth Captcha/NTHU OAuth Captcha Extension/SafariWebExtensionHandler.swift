@@ -2,8 +2,6 @@
 //  SafariWebExtensionHandler.swift
 //  NTHU OAuth Captcha Extension
 //
-//  Created by 歐睿鋐 on 2026/10/13.
-//
 
 import SafariServices
 import os.log
