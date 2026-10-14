@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         清大 OAuth 驗證碼自動填入
 // @description  在清大校務資訊系統 OAuth 登入頁辨識並填入驗證碼。只作用於 oauth.ccxp.nthu.edu.tw，不會讀取或送出帳號密碼。
-// @version      1.0.1
+// @version      1.0.2
 // @match        https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php*
 // @run-at       document-start
 // @inject-into  content
