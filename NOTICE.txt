@@ -1,6 +1,4 @@
-This extension includes the captcha recognition model from
-NTHU-OAuth-Decaptcha, Copyright 2022 Justin Chen, Bronwin Chen.
-https://github.com/justin0u0/NTHU-OAuth-Decaptcha
-
-That model and the bundled TensorFlow.js files are licensed under
-the Apache License, Version 2.0. A copy is in APACHE-2.0.txt.
+The captcha recognition models (model/oauth.json, model/oauth.bin,
+model/inquire.json, model/inquire.bin) and the code in content.js that runs
+them come from ccxpLite and ccxpDecaptcha, Copyright 2022 25349023,
+Copyright 2026 Hsi, under the MIT License. A copy is in MIT-ccxpLite.txt.

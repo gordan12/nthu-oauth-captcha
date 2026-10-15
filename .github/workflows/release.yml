@@ -61,14 +61,16 @@ jobs:
             ARCHS="arm64 x86_64" \
             ONLY_ACTIVE_ARCH=NO \
             MARKETING_VERSION="$version"
-          echo "ZIP=nthu-oauth-captcha-safari.zip" >> "$GITHUB_ENV"
+          echo "ZIP=nthu-captcha-autofill-safari.zip" >> "$GITHUB_ENV"
 
       - name: Package
         run: |
           cd build/Build/Products/Release
           codesign --verify --deep --strict "$APP"
           lipo -info "$APP/Contents/MacOS/NTHU OAuth Captcha"
-          ditto -c -k --keepParent "$APP" "$GITHUB_WORKSPACE/$ZIP"
+          # Finder shows the bundle folder name. Renaming it keeps the signature and the bundle ID.
+          mv "$APP" "NTHU Captcha Autofill.app"
+          ditto -c -k --keepParent "NTHU Captcha Autofill.app" "$GITHUB_WORKSPACE/$ZIP"
 
       - uses: actions/upload-artifact@v7
         with:
@@ -85,11 +87,11 @@ jobs:
         run: |
           stage="${RUNNER_TEMP}/nthu-oauth-captcha"
           mkdir -p "$stage"
-          cp manifest.json content.js APACHE-2.0.txt NOTICE.txt "$stage/"
-          cp -a icons model vendor "$stage/"
+          cp manifest.json content.js MIT-ccxpLite.txt NOTICE.txt "$stage/"
+          cp -a icons model "$stage/"
           # Files sit at the top of the zip, so Windows "Extract All" gives one folder with manifest.json inside.
           # The name has no version, so each update extracts over the same folder.
-          zipname="nthu-oauth-captcha-chrome.zip"
+          zipname="nthu-captcha-autofill-chrome.zip"
           (cd "$stage" && zip -r "$GITHUB_WORKSPACE/$zipname" .)
           if unzip -l "$zipname" | grep -Ei 'safari|xcodeproj|\.swift|\.app/|\.plist'; then
             echo "Edge/Chrome package contains Mac project files"
@@ -123,8 +125,8 @@ jobs:
           cat > notes.md <<EOF
           各平台下載哪一個：
 
-          - Edge / Chrome：下面的 \`nthu-oauth-captcha-chrome.zip\`
-          - macOS Safari：下面的 \`nthu-oauth-captcha-safari.zip\`
+          - Edge / Chrome：下面的 \`nthu-captcha-autofill-chrome.zip\`
+          - macOS Safari：下面的 \`nthu-captcha-autofill-safari.zip\`
           - iPad / iPhone Safari、Android Chrome：不用下載，已裝好的會自動換成這一版，安裝方式見 [README](https://github.com/$GITHUB_REPOSITORY#readme)
 
           不要下載最底下的 **Source code**，那是整個原始碼，不是外掛。
