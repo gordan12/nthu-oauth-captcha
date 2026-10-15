@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         清大驗證碼自動填入
 // @description  在清大校務資訊系統登入頁和 OAuth 登入頁辨識並填入驗證碼。只作用於這兩個登入頁，不會讀取或送出帳號密碼。
-// @version      1.0.3
+// @version      1.1.0
 // @match        https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php*
 // @match        https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/
 // @match        https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/index.php*
@@ -14,7 +14,7 @@
 // Generated from content.js by userscript/build.sh. Edit content.js instead.
 
 (() => {
-const chrome = { runtime: { getURL: (path) => "https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@v1.0.3/" + path } };
+const chrome = { runtime: { getURL: (path) => "https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@v1.1.0/" + path } };
 
 // Fills only the captcha field on a listed NTHU login page.
 // Account and password fields are left to the browser's password manager.

@@ -12,7 +12,7 @@ if (!onLoginPage) {
 }
 window.__nthuOauthCaptcha = true;
 
-const chrome = { runtime: { getURL: (path) => "https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@v1.0.3/" + path } };
+const chrome = { runtime: { getURL: (path) => "https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@v1.1.0/" + path } };
 
 // Fills only the captcha field on a listed NTHU login page.
 // Account and password fields are left to the browser's password manager.
