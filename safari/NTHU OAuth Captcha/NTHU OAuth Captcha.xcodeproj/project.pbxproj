@@ -22,8 +22,7 @@
 		E521F203307E6E5E00BA099A /* model in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FA307E6E5E00BA099A /* model */; };
 		E521F204307E6E5E00BA099A /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FB307E6E5E00BA099A /* manifest.json */; };
 		E521F205307E6E5E00BA099A /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FC307E6E5E00BA099A /* content.js */; };
-		E521F206307E6E5E00BA099A /* vendor in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FD307E6E5E00BA099A /* vendor */; };
-		E521F207307E6E5E00BA099A /* APACHE-2.0.txt in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FE307E6E5E00BA099A /* APACHE-2.0.txt */; };
+		E521F207307E6E5E00BA099A /* MIT-ccxpLite.txt in Resources */ = {isa = PBXBuildFile; fileRef = E521F1FE307E6E5E00BA099A /* MIT-ccxpLite.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,8 +68,7 @@
 		E521F1FA307E6E5E00BA099A /* model */ = {isa = PBXFileReference; lastKnownFileType = folder; name = model; path = ../../../model; sourceTree = "<group>"; };
 		E521F1FB307E6E5E00BA099A /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../../manifest.json; sourceTree = "<group>"; };
 		E521F1FC307E6E5E00BA099A /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../../content.js; sourceTree = "<group>"; };
-		E521F1FD307E6E5E00BA099A /* vendor */ = {isa = PBXFileReference; lastKnownFileType = folder; name = vendor; path = ../../../vendor; sourceTree = "<group>"; };
-		E521F1FE307E6E5E00BA099A /* APACHE-2.0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "APACHE-2.0.txt"; path = "../../../APACHE-2.0.txt"; sourceTree = "<group>"; };
+		E521F1FE307E6E5E00BA099A /* MIT-ccxpLite.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "MIT-ccxpLite.txt"; path = "../../../MIT-ccxpLite.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,8 +149,7 @@
 				E521F1FA307E6E5E00BA099A /* model */,
 				E521F1FB307E6E5E00BA099A /* manifest.json */,
 				E521F1FC307E6E5E00BA099A /* content.js */,
-				E521F1FD307E6E5E00BA099A /* vendor */,
-				E521F1FE307E6E5E00BA099A /* APACHE-2.0.txt */,
+				E521F1FE307E6E5E00BA099A /* MIT-ccxpLite.txt */,
 			);
 			name = Resources;
 			path = "NTHU OAuth Captcha Extension";
@@ -260,8 +257,7 @@
 				E521F200307E6E5E00BA099A /* NOTICE.txt in Resources */,
 				E521F203307E6E5E00BA099A /* model in Resources */,
 				E521F202307E6E5E00BA099A /* icons in Resources */,
-				E521F206307E6E5E00BA099A /* vendor in Resources */,
-				E521F207307E6E5E00BA099A /* APACHE-2.0.txt in Resources */,
+				E521F207307E6E5E00BA099A /* MIT-ccxpLite.txt in Resources */,
 				E521F204307E6E5E00BA099A /* manifest.json in Resources */,
 				E521F205307E6E5E00BA099A /* content.js in Resources */,
 			);

@@ -85,8 +85,8 @@ jobs:
         run: |
           stage="${RUNNER_TEMP}/nthu-oauth-captcha"
           mkdir -p "$stage"
-          cp manifest.json content.js APACHE-2.0.txt NOTICE.txt "$stage/"
-          cp -a icons model vendor "$stage/"
+          cp manifest.json content.js MIT-ccxpLite.txt NOTICE.txt "$stage/"
+          cp -a icons model "$stage/"
           # Files sit at the top of the zip, so Windows "Extract All" gives one folder with manifest.json inside.
           # The name has no version, so each update extracts over the same folder.
           zipname="nthu-oauth-captcha-chrome.zip"

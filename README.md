@@ -130,8 +130,8 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 ## 來源與授權
 
-驗證碼辨識模型不是這個 repo 訓練的，權重直接使用 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen）。只用 Chrome 的話，也可以直接裝他們在 Chrome 線上應用程式商店上架的版本。
+驗證碼辨識模型不是這個 repo 訓練的。模型權重和執行它的程式來自 [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) 與 [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha)（Copyright 2022 25349023, Copyright 2026 Hsi），採用 MIT License，全文在 [MIT-ccxpLite.txt](MIT-ccxpLite.txt)。
 
-`model/` 和 `vendor/` 採用 Apache License 2.0，全文在 [APACHE-2.0.txt](APACHE-2.0.txt)。
+1.0.x 版的 OAuth 模型來自 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen，Apache License 2.0）。
 
 想修改或發佈新版，請看[開發說明](docs/development.md)。

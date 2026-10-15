@@ -11,13 +11,7 @@
   "content_scripts": [
     {
       "matches": ["https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php*"],
-      "js": [
-        "vendor/tfjs-core.min.js",
-        "vendor/tfjs-backend-webgl.min.js",
-        "vendor/tfjs-backend-cpu.min.js",
-        "vendor/tfjs-layers.min.js",
-        "content.js"
-      ],
+      "js": ["content.js"],
       "run_at": "document_start"
     }
   ],

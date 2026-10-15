@@ -132,8 +132,8 @@ Recognition runs in your own browser, and the captcha image is never sent to any
 
 ## Credits and license
 
-The captcha model was not trained in this repo. Its weights come from [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha) (Copyright 2022 Justin Chen, Bronwin Chen). If you only use Chrome, you can also install their version from the Chrome Web Store.
+The captcha model was not trained in this repo. Its weights, and the code that runs them, come from [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) and [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha) (Copyright 2022 25349023, Copyright 2026 Hsi), under the MIT License; the full text is in [MIT-ccxpLite.txt](MIT-ccxpLite.txt).
 
-`model/` and `vendor/` are under the Apache License 2.0; the full text is in [APACHE-2.0.txt](APACHE-2.0.txt).
+Versions 1.0.x used the OAuth model from [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha) (Copyright 2022 Justin Chen, Bronwin Chen, Apache License 2.0).
 
 To change the code or publish a release, see the [development notes](docs/development.md) (in Chinese).
