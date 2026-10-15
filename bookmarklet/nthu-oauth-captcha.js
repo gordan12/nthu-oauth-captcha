@@ -1,10 +1,13 @@
 // Generated from content.js by bookmarklet/build.sh. Edit content.js instead.
-// The bookmark in README.md loads the copy at the newest tag on the NTHU OAuth login page.
+// The bookmark in README.md loads the copy at the newest tag on an NTHU login page.
 
 (() => {
 if (window.__nthuOauthCaptcha) return;
-if (!location.href.startsWith("https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php")) {
-  alert("請在清大 OAuth 登入頁點這個書籤。");
+const onLoginPage =
+  location.href.startsWith("https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php") ||
+  /^https:\/\/www\.ccxp\.nthu\.edu\.tw\/ccxp\/INQUIRE\/(index\.php)?([?#]|$)/.test(location.href);
+if (!onLoginPage) {
+  alert("請在清大校務資訊系統或 OAuth 登入頁點這個書籤。");
   return;
 }
 window.__nthuOauthCaptcha = true;
@@ -28,6 +31,20 @@ const TARGETS = [
     height: 80,
     digits: 4,
     model: "model/oauth.json",
+  },
+  {
+    id: "inquire",
+    page: /^https:\/\/www\.ccxp\.nthu\.edu\.tw\/ccxp\/INQUIRE\/(index\.php)?([?#]|$)/,
+    image: 'img[src^="auth_img.php"]',
+    input: 'input[name="passwd2"]',
+    status: 'a[href^="auth_wav/"]',
+    retry: "請重新整理頁面",
+    filled: "驗證碼已填入。",
+    network: inquireNetwork,
+    width: 113,
+    height: 36,
+    digits: 6,
+    model: "model/inquire.json",
   },
 ].filter((target) => target.page.test(location.href));
 
@@ -168,6 +185,36 @@ function toPlanes(rgba, width, height, cropRight) {
     }
   }
   return { shape: [3, height, used], data };
+}
+
+// Each digit reads the average of its own vertical band of the feature map.
+function inquireNetwork(model, rgba, width, height) {
+  const block = (x, prefix, stride) =>
+    separableBlock(x, model, [`${prefix}.0`, `${prefix}.1`, `${prefix}.3`, `${prefix}.4`], stride);
+  let x = conv2d(toPlanes(rgba, width, height, model.cropRight), model.weights["features.0.weight"], 2, 1, 1);
+  x = batchNorm(x, model, "features.1", true);
+  x = block(x, "features.3.block", 1);
+  x = block(x, "features.4.block", 2);
+  x = block(x, "features.5.block", 1);
+
+  const [channels, h, w] = x.shape;
+  let code = "";
+  for (let d = 0; d < model.digits; d += 1) {
+    const x0 = Math.floor((d * w) / model.digits);
+    const x1 = Math.ceil(((d + 1) * w) / model.digits);
+    const head = model.weights[`heads.${d}.weight`].data;
+    const scores = Float32Array.from(model.weights[`heads.${d}.bias`].data);
+    for (let c = 0; c < channels; c += 1) {
+      let total = 0;
+      for (let y = 0; y < h; y += 1) {
+        for (let xx = x0; xx < x1; xx += 1) total += x.data[(c * h + y) * w + xx];
+      }
+      const mean = total / (h * (x1 - x0));
+      for (let digit = 0; digit < scores.length; digit += 1) scores[digit] += head[digit * channels + c] * mean;
+    }
+    code += String(argmax(scores));
+  }
+  return code;
 }
 
 // Residual blocks, then each digit attends over every position of the feature map.

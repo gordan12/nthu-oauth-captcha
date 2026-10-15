@@ -2,7 +2,7 @@
 
 [中文](README.md)
 
-Reads and fills in the captcha on the NTHU OAuth login page. It only fills the captcha. It never reads or sends your student ID or password, and it never presses Login for you.
+Reads and fills in the captcha on the NTHU academic information system and OAuth login pages. It only fills the captcha. It never reads or sends your student ID or password, and it never presses Login for you.
 
 ![The captcha is already filled when the login page opens; after pressing refresh, the new image is filled again](docs/demo.gif)
 
@@ -28,7 +28,7 @@ The extension's messages on the login page are in Chinese. 「驗證碼已填入
 2. Open `edge://extensions` (`chrome://extensions` in Chrome).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and choose the extracted `nthu-oauth-captcha-chrome` folder.
-5. Open the NTHU OAuth login page. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
+5. Open the NTHU academic information system or OAuth login page. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 **Updating**: download the new zip, extract it the same way and replace the old files, then press the reload icon on this extension in `edge://extensions`. Versions up to 1.0.2 extracted into two nested folders; when updating from those, remove the old extension first and install again with the steps above.
 
@@ -44,7 +44,7 @@ Requires macOS 12 or later.
 3. In Safari, open **Settings → Advanced** and check **Show features for web developers**.
 4. In **Settings → Developer**, check **Allow unsigned extensions**.
 5. In **Settings → Extensions**, check 「清大 OAuth 驗證碼自動填入」.
-6. Open the NTHU OAuth login page, click the extension icon next to the address bar, and choose **Always Allow on This Website**. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
+6. Open the NTHU academic information system or OAuth login page, click the extension icon next to the address bar, and choose **Always Allow on This Website**. The two login pages are different websites, so allow each once. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 Safari turns "Allow unsigned extensions" off every time it quits, so you need to check it again after restarting Safari. To avoid this, use the Userscripts method for iPad / iPhone below; it also works in Safari on the Mac.
 
@@ -60,7 +60,7 @@ Safari on iPad cannot load extension files directly, so this uses the free Users
 1. Install "Userscripts" from the App Store, open it once, and choose a folder for scripts when asked.
 2. Go to **Settings → Safari → Extensions** (on newer iPadOS, **Settings → Apps → Safari → Extensions**) and turn on Userscripts.
 3. Open the `nthu-oauth-captcha.user.js` link from "Download" above in Safari, tap Userscripts in the extensions menu of the address bar, and tap Install.
-4. Open the NTHU OAuth login page and allow Userscripts when Safari asks. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
+4. Open the NTHU academic information system or OAuth login page and allow Userscripts when Safari asks. Safari asks once for each of the two login pages. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 **Updating**: Userscripts gets new versions from the update URL in the script. To update right away, check for updates on this script in Userscripts.
 
@@ -79,7 +79,7 @@ Chrome on Android cannot install extensions, so this uses a bookmark instead: ta
 
 2. Open any page in Chrome and tap **Menu → star** to add a bookmark.
 3. Tap **Menu → Bookmarks**, long-press the new bookmark and choose **Edit**. Rename it to something easy to type, such as `nthucaptcha`. Delete the whole URL, paste the line from step 1, and save.
-4. Open the NTHU OAuth login page, tap the address bar, type `nthucaptcha`, and tap the suggestion with the star. Tapping it from the bookmarks menu does not run it; it has to be from the address bar.
+4. Open the NTHU academic information system or OAuth login page, tap the address bar, type `nthucaptcha`, and tap the suggestion with the star. Tapping it from the bookmarks menu does not run it; it has to be from the address bar.
 5. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 The bookmark does not run by itself; tap it each time you open the login page. On any other page it only shows a notice.
@@ -100,7 +100,10 @@ Press the refresh icon next to the captcha. The extension reads the new image ag
 <details>
 <summary>Which pages does it work on?</summary>
 
-Only `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`, used by sites such as eeclass and elearn that sign in with an NTHU account. The 6-digit captcha on the academic information system homepage `www.ccxp.nthu.edu.tw` is not supported.
+Only two login pages:
+
+- The academic information system login page `https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/`, with a 6-digit captcha. It has no button for a new image, so reload the page if the code is wrong.
+- The OAuth login page `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`, with a 4-digit captcha, used by sites such as eeclass and elearn that sign in with an NTHU account.
 
 </details>
 
@@ -132,7 +135,7 @@ Recognition runs in your own browser, and the captcha image is never sent to any
 
 ## Credits and license
 
-The captcha model was not trained in this repo. Its weights, and the code that runs them, come from [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) and [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha) (Copyright 2022 25349023, Copyright 2026 Hsi), under the MIT License; the full text is in [MIT-ccxpLite.txt](MIT-ccxpLite.txt).
+The captcha models were not trained in this repo. The weights for both login pages, and the code that runs them, come from [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) and [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha) (Copyright 2022 25349023, Copyright 2026 Hsi), under the MIT License; the full text is in [MIT-ccxpLite.txt](MIT-ccxpLite.txt).
 
 Versions 1.0.x used the OAuth model from [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha) (Copyright 2022 Justin Chen, Bronwin Chen, Apache License 2.0).
 

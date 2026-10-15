@@ -1,6 +1,6 @@
-model/oauth.json, model/oauth.bin and the network code in content.js
-(conv2d through oauthNetwork) come from ccxpLite and ccxpDecaptcha, under
-the following license.
+model/oauth.json, model/oauth.bin, model/inquire.json, model/inquire.bin and
+the network code in content.js (conv2d through oauthNetwork) come from
+ccxpLite and ccxpDecaptcha, under the following license.
 
 https://github.com/Hsiii/ccxpLite
 https://github.com/Hsiii/ccxpDecaptcha

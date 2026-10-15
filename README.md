@@ -2,7 +2,7 @@
 
 [English](README.en.md)
 
-打開清大 OAuth 登入頁時，自動辨識並填入驗證碼。只填驗證碼，不會讀取或送出帳號密碼，也不會代按登入。
+打開清大校務資訊系統或 OAuth 登入頁時，自動辨識並填入驗證碼。只填驗證碼，不會讀取或送出帳號密碼，也不會代按登入。
 
 ![打開登入頁後驗證碼已填好；按重新整理換一張圖，會再填一次](docs/demo.gif)
 
@@ -26,7 +26,7 @@
 2. 打開 `edge://extensions`（Chrome 則是 `chrome://extensions`）。
 3. 打開**開發人員模式**。
 4. 按**載入未封裝**，選解壓出來的 `nthu-oauth-captcha-chrome` 資料夾。
-5. 打開清大 OAuth 登入頁。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
+5. 打開清大校務資訊系統或 OAuth 登入頁。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 **更新**：下載新版 zip，同樣全部解壓縮並取代舊檔案，再到 `edge://extensions` 按這個外掛的重新載入圖示。1.0.2 以前的版本解壓後有兩層資料夾，從那些版本更新時，先移除舊的外掛，再照上面的步驟裝一次。
 
@@ -42,7 +42,7 @@
 3. Safari 打開**設定 → 進階**，勾選**顯示網頁開發者功能**。
 4. 在**設定 → 開發者**勾選**允許未簽署的延伸功能**。
 5. 在**設定 → 延伸功能**勾選「清大 OAuth 驗證碼自動填入」。
-6. 打開清大 OAuth 登入頁，按網址列旁的外掛圖示，選**在此網站上一律允許**。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
+6. 打開清大校務資訊系統或 OAuth 登入頁，按網址列旁的外掛圖示，選**在此網站上一律允許**。兩個登入頁是不同網站，各要允許一次。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 「允許未簽署的延伸功能」在 Safari 每次結束後會自動取消，重開 Safari 後要再勾一次。要免掉這一步，可以改用下面 iPad / iPhone 的 Userscripts 做法，Mac 的 Safari 也適用。
 
@@ -58,7 +58,7 @@ iPad 的 Safari 不能直接載入外掛檔案，這裡改用免費的 Userscrip
 1. 從 App Store 安裝「Userscripts」，打開一次，照指示選一個存放腳本的資料夾。
 2. 到**設定 → Safari → 延伸功能**（較新的 iPadOS 在**設定 → App → Safari → 延伸功能**），打開 Userscripts。
 3. 用 Safari 打開上面「下載」裡的 `nthu-oauth-captcha.user.js` 連結，從網址列的延伸功能選單點 Userscripts，按安裝。
-4. 打開清大 OAuth 登入頁，Safari 問 Userscripts 的權限時選允許。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
+4. 打開清大校務資訊系統或 OAuth 登入頁，Safari 問 Userscripts 的權限時選允許。兩個登入頁各會問一次。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 **更新**：Userscripts 會照腳本裡的更新網址取得新版。想馬上更新，在 Userscripts 裡對這個腳本檢查更新。
 
@@ -77,7 +77,7 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 2. 在 Chrome 隨便打開一個網頁，按右上角**選單 → 星號**加入書籤。
 3. 按**選單 → 書籤**，找到剛剛那個書籤，長按後選**編輯**。名稱改成好打的字，例如 `nthucaptcha`；網址整個刪掉，貼上第 1 步複製的那行，存檔。
-4. 打開清大 OAuth 登入頁，點網址列，輸入 `nthucaptcha`，點建議清單裡有星號的那一項。從書籤選單直接點不會執行，一定要從網址列點。
+4. 打開清大校務資訊系統或 OAuth 登入頁，點網址列，輸入 `nthucaptcha`，點建議清單裡有星號的那一項。從書籤選單直接點不會執行，一定要從網址列點。
 5. 驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 書籤不會自己執行，每次打開登入頁都要點一次。在別的網頁點，只會跳出提示。
@@ -98,7 +98,10 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 <details>
 <summary>哪些頁面會用到？</summary>
 
-只作用於 `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`，例如 eeclass、elearn 這類用清大帳號登入的網站。校務系統首頁 `www.ccxp.nthu.edu.tw` 的 6 位數驗證碼不在範圍內。
+只作用於兩個登入頁：
+
+- 校務資訊系統登入頁 `https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/`，6 位數驗證碼。這頁沒有換圖按鈕，沒填對就重新整理頁面。
+- OAuth 登入頁 `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`，4 位數驗證碼，例如 eeclass、elearn 這類用清大帳號登入的網站。
 
 </details>
 
@@ -130,7 +133,7 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 ## 來源與授權
 
-驗證碼辨識模型不是這個 repo 訓練的。模型權重和執行它的程式來自 [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) 與 [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha)（Copyright 2022 25349023, Copyright 2026 Hsi），採用 MIT License，全文在 [MIT-ccxpLite.txt](MIT-ccxpLite.txt)。
+驗證碼辨識模型不是這個 repo 訓練的。兩個登入頁的模型權重和執行它們的程式，都來自 [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) 與 [Hsiii/ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha)（Copyright 2022 25349023, Copyright 2026 Hsi），採用 MIT License，全文在 [MIT-ccxpLite.txt](MIT-ccxpLite.txt)。
 
 1.0.x 版的 OAuth 模型來自 [justin0u0/NTHU-OAuth-Decaptcha](https://github.com/justin0u0/NTHU-OAuth-Decaptcha)（Copyright 2022 Justin Chen, Bronwin Chen，Apache License 2.0）。
 

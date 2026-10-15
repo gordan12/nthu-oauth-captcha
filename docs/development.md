@@ -5,7 +5,7 @@
 ## 檔案
 
 - `content.js`、`manifest.json`：外掛本體。所有平台都從這份 `content.js` 來。
-- `model/oauth.*`：OAuth 頁的辨識模型，是 [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) 的 `src/oauth/decaptcha.model.ts` 裡的 [ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha) 權重，授權全文在 `MIT-ccxpLite.txt`。`.json` 記錄模型設定和每個權重的名稱、形狀，`.bin` 依同樣順序存 float32（little-endian）。
+- `model/oauth.*`、`model/inquire.*`：OAuth 頁和校務資訊系統登入頁的辨識模型，是 [Hsiii/ccxpLite](https://github.com/Hsiii/ccxpLite) 的 `src/oauth/decaptcha.model.ts` 和 `src/login/auth/decaptcha.model.ts` 裡的 [ccxpDecaptcha](https://github.com/Hsiii/ccxpDecaptcha) 權重，授權全文在 `MIT-ccxpLite.txt`。`.json` 記錄模型設定和每個權重的名稱、形狀，`.bin` 依同樣順序存 float32（little-endian）。
 - `scripts/pack-model.js`：把 ccxpLite 的模型檔轉成 `model/` 裡的 `.json` 和 `.bin`，只給開發者用，不會打包進外掛。
 - `safari/`：Xcode 的 Safari 包裝 App，直接引用根目錄的外掛檔案，不另外複製。
 - `userscript/`：iPad / iPhone 用的使用者腳本，由 `userscript/build.sh` 從 `content.js` 產生。
@@ -15,8 +15,8 @@
 ## 這個 repo 自己寫的部分
 
 - 頁面一打開就開始下載模型，換圖時沿用已載入的模型。
-- 單一 content script：頁面出現驗證碼就辨識，按重新整理換成新圖後再辨識一次。
-- 辨識不用任何函式庫：`content.js` 用迴圈直接算卷積和全連接層，從 ccxpLite 移植而來（`oauthNetwork`，約 11.9 萬個參數，在 Node.js 裡每張約 0.2 秒）。1.0.x 版用的是 TensorFlow.js 和 justin0u0 的 80 萬參數模型，1.1.0 換掉後，OAuth 抽樣 39 張的全對率從 35 張升到 39 張，外掛也從約 4.6 MB 縮到約 0.5 MB。
+- 單一 `content.js`：`TARGETS` 列出每個登入頁的網址、欄位和模型，只啟用符合目前網址的那幾項。頁面出現驗證碼就辨識，按重新整理換成新圖後再辨識一次。
+- 辨識不用任何函式庫：`content.js` 用迴圈直接算卷積和全連接層，從 ccxpLite 移植而來。兩個模型的結構不同，各有一個函式：`oauthNetwork`（約 11.9 萬個參數，在 Node.js 裡每張約 0.2 秒）和 `inquireNetwork`（約 1.2 萬個參數，約 0.03 秒）。1.0.x 版用的是 TensorFlow.js 和 justin0u0 的 80 萬參數模型，1.1.0 換掉後，OAuth 抽樣 39 張的全對率從 35 張升到 39 張，外掛也從約 4.6 MB 縮到約 0.5 MB。
 - 驗證碼欄原本是 `type="number"`，`0123` 這類開頭是 0 的驗證碼會被瀏覽器收成 `123`。填入前會改成文字欄，把 4 個字完整留下。
 - 只寫入驗證碼欄。帳號、密碼留給瀏覽器的密碼管理，也不會代按登入。
 
@@ -30,13 +30,14 @@
 
 ## 更新模型
 
-ccxpLite 更新權重時，下載它 repo 裡的 `src/oauth/decaptcha.model.ts`，再執行：
+ccxpLite 更新權重時，下載它 repo 裡的 `src/oauth/decaptcha.model.ts` 和 `src/login/auth/decaptcha.model.ts`，再執行：
 
 ```
 node scripts/pack-model.js <下載的 oauth decaptcha.model.ts> model/oauth
+node scripts/pack-model.js <下載的 login/auth decaptcha.model.ts> model/inquire
 ```
 
-如果對方改了模型結構（層數、權重名稱），只換檔案不夠，`content.js` 裡的 `oauthNetwork` 也要照他們的 `decaptcha.ts` 跟著改。
+如果對方改了模型結構（層數、權重名稱），只換檔案不夠，`content.js` 裡的 `oauthNetwork` 或 `inquireNetwork` 也要照他們的 `decaptcha.ts` 跟著改。
 
 ## 版本號
 

@@ -1,4 +1,4 @@
-The captcha recognition model (model/oauth.json, model/oauth.bin) and the
-code in content.js that runs it come from ccxpLite and ccxpDecaptcha,
-Copyright 2022 25349023, Copyright 2026 Hsi, under the MIT License.
-A copy is in MIT-ccxpLite.txt.
+The captcha recognition models (model/oauth.json, model/oauth.bin,
+model/inquire.json, model/inquire.bin) and the code in content.js that runs
+them come from ccxpLite and ccxpDecaptcha, Copyright 2022 25349023,
+Copyright 2026 Hsi, under the MIT License. A copy is in MIT-ccxpLite.txt.
