@@ -1,4 +1,4 @@
-# NTHU OAuth Captcha Autofill
+# NTHU Captcha Autofill
 
 [中文](README.md)
 
@@ -10,8 +10,8 @@ Reads and fills in the captcha on the NTHU academic information system and OAuth
 
 | Device | Download |
 |---|---|
-| Edge / Chrome | [nthu-oauth-captcha-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-chrome.zip) |
-| macOS Safari | [nthu-oauth-captcha-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-safari.zip) |
+| Edge / Chrome | [nthu-captcha-autofill-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-chrome.zip) |
+| macOS Safari | [nthu-captcha-autofill-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-safari.zip) |
 | iPad / iPhone Safari | Install Userscripts first, then open [nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js) |
 | Android Chrome | Nothing to download; add a bookmark |
 
@@ -24,10 +24,10 @@ The extension's messages on the login page are in Chinese. 「驗證碼已填入
 <details>
 <summary><b>Edge / Chrome</b></summary>
 
-1. Download `nthu-oauth-captcha-chrome.zip`, right-click it and choose **Extract All**. Delete the zip afterwards, so the next update extracts into the same folder.
+1. Download `nthu-captcha-autofill-chrome.zip`, right-click it and choose **Extract All**. Delete the zip afterwards, so the next update extracts into the same folder.
 2. Open `edge://extensions` (`chrome://extensions` in Chrome).
 3. Turn on **Developer mode**.
-4. Click **Load unpacked** and choose the extracted `nthu-oauth-captcha-chrome` folder.
+4. Click **Load unpacked** and choose the extracted `nthu-captcha-autofill-chrome` folder.
 5. Open the NTHU academic information system or OAuth login page. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 **Updating**: download the new zip, extract it the same way and replace the old files, then press the reload icon on this extension in `edge://extensions`. Versions up to 1.0.2 extracted into two nested folders; when updating from those, remove the old extension first and install again with the steps above.
@@ -39,11 +39,11 @@ The extension's messages on the login page are in Chinese. 「驗證碼已填入
 
 Requires macOS 12 or later.
 
-1. Download `nthu-oauth-captcha-safari.zip`. Safari unzips it into "NTHU OAuth Captcha"; if it is still a zip, double-click it. Drag it into Applications.
-2. Open "NTHU OAuth Captcha". macOS says it cannot verify the app is free of malware, because the app is not notarized by Apple. Go to **System Settings → Privacy & Security**, scroll down, click **Open Anyway**, and open the app again. You can close the small window that appears.
+1. Download `nthu-captcha-autofill-safari.zip`. Safari unzips it into "NTHU Captcha Autofill"; if it is still a zip, double-click it. Drag it into Applications.
+2. Open "NTHU Captcha Autofill". macOS says it cannot verify the app is free of malware, because the app is not notarized by Apple. Go to **System Settings → Privacy & Security**, scroll down, click **Open Anyway**, and open the app again. You can close the small window that appears.
 3. In Safari, open **Settings → Advanced** and check **Show features for web developers**.
 4. In **Settings → Developer**, check **Allow unsigned extensions**.
-5. In **Settings → Extensions**, check 「清大 OAuth 驗證碼自動填入」.
+5. In **Settings → Extensions**, check 「清大驗證碼自動填入」.
 6. Open the NTHU academic information system or OAuth login page, click the extension icon next to the address bar, and choose **Always Allow on This Website**. The two login pages are different websites, so allow each once. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 Safari turns "Allow unsigned extensions" off every time it quits, so you need to check it again after restarting Safari. To avoid this, use the Userscripts method for iPad / iPhone below; it also works in Safari on the Mac.

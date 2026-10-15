@@ -1,4 +1,4 @@
-# 清大 OAuth 驗證碼自動填入
+# 清大驗證碼自動填入
 
 [English](README.en.md)
 
@@ -10,8 +10,8 @@
 
 | 裝置 | 下載 |
 |---|---|
-| Edge / Chrome | [nthu-oauth-captcha-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-chrome.zip) |
-| macOS Safari | [nthu-oauth-captcha-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-oauth-captcha-safari.zip) |
+| Edge / Chrome | [nthu-captcha-autofill-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-chrome.zip) |
+| macOS Safari | [nthu-captcha-autofill-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-safari.zip) |
 | iPad / iPhone Safari | 先裝 Userscripts，再打開 [nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js) |
 | Android Chrome | 不用下載，新增一個書籤 |
 
@@ -22,10 +22,10 @@
 <details>
 <summary><b>Edge / Chrome</b></summary>
 
-1. 下載 `nthu-oauth-captcha-chrome.zip`，按右鍵選**全部解壓縮**。解壓後把 zip 刪掉，下次更新才會解壓到同一個資料夾。
+1. 下載 `nthu-captcha-autofill-chrome.zip`，按右鍵選**全部解壓縮**。解壓後把 zip 刪掉，下次更新才會解壓到同一個資料夾。
 2. 打開 `edge://extensions`（Chrome 則是 `chrome://extensions`）。
 3. 打開**開發人員模式**。
-4. 按**載入未封裝**，選解壓出來的 `nthu-oauth-captcha-chrome` 資料夾。
+4. 按**載入未封裝**，選解壓出來的 `nthu-captcha-autofill-chrome` 資料夾。
 5. 打開清大校務資訊系統或 OAuth 登入頁。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 **更新**：下載新版 zip，同樣全部解壓縮並取代舊檔案，再到 `edge://extensions` 按這個外掛的重新載入圖示。1.0.2 以前的版本解壓後有兩層資料夾，從那些版本更新時，先移除舊的外掛，再照上面的步驟裝一次。
@@ -37,11 +37,11 @@
 
 需要 macOS 12 以上。
 
-1. 下載 `nthu-oauth-captcha-safari.zip`。用 Safari 下載會自動解開成「NTHU OAuth Captcha」；若還是 zip，雙擊就會解開。把它拖進「應用程式」。
-2. 打開「NTHU OAuth Captcha」。macOS 會說無法確認是否含有惡意軟體，因為這個 App 沒有經過 Apple 公證。到**系統設定 → 隱私權與安全性**，往下按**仍要打開**，再打開一次。跳出的小視窗可以關掉。
+1. 下載 `nthu-captcha-autofill-safari.zip`。用 Safari 下載會自動解開成「NTHU Captcha Autofill」；若還是 zip，雙擊就會解開。把它拖進「應用程式」。
+2. 打開「NTHU Captcha Autofill」。macOS 會說無法確認是否含有惡意軟體，因為這個 App 沒有經過 Apple 公證。到**系統設定 → 隱私權與安全性**，往下按**仍要打開**，再打開一次。跳出的小視窗可以關掉。
 3. Safari 打開**設定 → 進階**，勾選**顯示網頁開發者功能**。
 4. 在**設定 → 開發者**勾選**允許未簽署的延伸功能**。
-5. 在**設定 → 延伸功能**勾選「清大 OAuth 驗證碼自動填入」。
+5. 在**設定 → 延伸功能**勾選「清大驗證碼自動填入」。
 6. 打開清大校務資訊系統或 OAuth 登入頁，按網址列旁的外掛圖示，選**在此網站上一律允許**。兩個登入頁是不同網站，各要允許一次。驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 「允許未簽署的延伸功能」在 Safari 每次結束後會自動取消，重開 Safari 後要再勾一次。要免掉這一步，可以改用下面 iPad / iPhone 的 Userscripts 做法，Mac 的 Safari 也適用。

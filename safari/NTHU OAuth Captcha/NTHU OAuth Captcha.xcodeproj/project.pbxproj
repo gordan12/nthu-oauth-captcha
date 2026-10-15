@@ -442,7 +442,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NTHU OAuth Captcha Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NTHU OAuth Captcha Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "NTHU Captcha Autofill Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -477,7 +477,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NTHU OAuth Captcha Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NTHU OAuth Captcha Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "NTHU Captcha Autofill Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,7 +516,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NTHU OAuth Captcha/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NTHU OAuth Captcha";
+				INFOPLIST_KEY_CFBundleDisplayName = "NTHU Captcha Autofill";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -558,7 +558,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "NTHU OAuth Captcha/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "NTHU OAuth Captcha";
+				INFOPLIST_KEY_CFBundleDisplayName = "NTHU Captcha Autofill";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;

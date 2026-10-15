@@ -13,7 +13,7 @@ MODEL=https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@v$VERSION/
 {
   cat <<EOF
 // ==UserScript==
-// @name         清大 OAuth 驗證碼自動填入
+// @name         清大驗證碼自動填入
 // @description  在清大校務資訊系統登入頁和 OAuth 登入頁辨識並填入驗證碼。只作用於這兩個登入頁，不會讀取或送出帳號密碼。
 // @version      $VERSION
 // @match        https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php*
