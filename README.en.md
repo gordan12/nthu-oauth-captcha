@@ -4,7 +4,9 @@
 
 Reads and fills in the captcha on the NTHU academic information system and OAuth login pages. It only fills the captcha. It never reads or sends your student ID or password, and it never presses Login for you.
 
-![The captcha is already filled when the login page opens; after pressing refresh, the new image is filled again](docs/demo.gif)
+| Academic information system login page | OAuth login page |
+|---|---|
+| ![The captcha is already filled when the login page opens; after reloading the page, the new image is filled again](docs/demo-inquire.gif) | ![The captcha is already filled when the login page opens; after pressing refresh, the new image is filled again](docs/demo-oauth.gif) |
 
 ## Download
 
