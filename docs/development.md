@@ -19,6 +19,7 @@
 - 辨識不用任何函式庫：`content.js` 用迴圈直接算卷積和全連接層，從 ccxpLite 移植而來。兩個模型的結構不同，各有一個函式：`oauthNetwork`（約 11.9 萬個參數，在 Node.js 裡每張約 0.2 秒）和 `inquireNetwork`（約 1.2 萬個參數，約 0.03 秒）。1.0.x 版用的是 TensorFlow.js 和 justin0u0 的 80 萬參數模型，1.1.0 換掉後，OAuth 抽樣 39 張的全對率從 35 張升到 39 張，外掛也從約 4.6 MB 縮到約 0.5 MB。
 - 驗證碼欄原本是 `type="number"`，`0123` 這類開頭是 0 的驗證碼會被瀏覽器收成 `123`。填入前會改成文字欄，把 4 個字完整留下。
 - 只寫入驗證碼欄。帳號、密碼留給瀏覽器的密碼管理，也不會代按登入。
+- Android 書籤只支援 OAuth 登入頁。校務資訊系統登入頁的回應帶有 `Content-Security-Policy: default-src 'self' 'unsafe-inline'`，書籤本身能執行，但從 jsDelivr 載入程式和模型都會被擋，所以 README 的書籤在載入失敗時跳出提示。把程式和模型整個放進書籤也試過：約 7.4 萬字，Chrome for Android 的書籤網址欄只存得下前 5000 字，就算把模型壓到最小也超過，不可行。
 
 ## 修改程式
 

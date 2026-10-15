@@ -15,7 +15,7 @@ Reads and fills in the captcha on the NTHU academic information system and OAuth
 | Edge / Chrome | [nthu-captcha-autofill-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-chrome.zip) |
 | macOS Safari | [nthu-captcha-autofill-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-safari.zip) |
 | iPad / iPhone Safari | Install Userscripts first, then open [nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js) |
-| Android Chrome | Nothing to download; add a bookmark |
+| Android Chrome | Nothing to download; add a bookmark (OAuth login page only) |
 
 The links always point to the latest version. Open your device below for the install steps.
 
@@ -73,15 +73,17 @@ Safari on iPad cannot load extension files directly, so this uses the free Users
 
 Chrome on Android cannot install extensions, so this uses a bookmark instead: tap it on the login page and it loads the same code. The first image takes a few seconds.
 
+The bookmark works only on the OAuth login page. The academic information system login page only allows code from its own site, so Chrome blocks the code the bookmark loads and the bookmark only shows a notice. To fill the captcha on that page, use a computer or an iPad.
+
 1. Copy this whole line:
 
    ```
-   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/bookmarklet/nthu-oauth-captcha.js';document.body.appendChild(s);})()
+   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/bookmarklet/nthu-oauth-captcha.js';s.onerror=()=>alert('程式載入失敗。校務資訊系統登入頁不支援書籤，請改用電腦或iPad；其他頁面請檢查網路後再試。');document.body.appendChild(s);})()
    ```
 
 2. Open any page in Chrome and tap **Menu → star** to add a bookmark.
 3. Tap **Menu → Bookmarks**, long-press the new bookmark and choose **Edit**. Rename it to something easy to type, such as `nthucaptcha`. Delete the whole URL, paste the line from step 1, and save.
-4. Open the NTHU academic information system or OAuth login page, tap the address bar, type `nthucaptcha`, and tap the suggestion with the star. Tapping it from the bookmarks menu does not run it; it has to be from the address bar.
+4. Open the OAuth login page, tap the address bar, type `nthucaptcha`, and tap the suggestion with the star. Tapping it from the bookmarks menu does not run it; it has to be from the address bar.
 5. When 「驗證碼已填入」 appears under the captcha, check your ID and password, then press Login.
 
 The bookmark does not run by itself; tap it each time you open the login page. On any other page it only shows a notice.
@@ -106,6 +108,8 @@ Only two login pages:
 
 - The academic information system login page `https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/`, with a 6-digit captcha. It has no button for a new image, so reload the page if the code is wrong.
 - The OAuth login page `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`, with a 4-digit captcha, used by sites such as eeclass and elearn that sign in with an NTHU account.
+
+On Android, the bookmark works only on the OAuth login page.
 
 </details>
 

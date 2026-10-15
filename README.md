@@ -15,7 +15,7 @@
 | Edge / Chrome | [nthu-captcha-autofill-chrome.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-chrome.zip) |
 | macOS Safari | [nthu-captcha-autofill-safari.zip](https://github.com/gordan12/nthu-oauth-captcha/releases/latest/download/nthu-captcha-autofill-safari.zip) |
 | iPad / iPhone Safari | 先裝 Userscripts，再打開 [nthu-oauth-captcha.user.js](https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/userscript/nthu-oauth-captcha.user.js) |
-| Android Chrome | 不用下載，新增一個書籤 |
+| Android Chrome | 不用下載，新增一個書籤（只支援 OAuth 登入頁） |
 
 連結永遠指向最新版。點開下面你的裝置看安裝步驟。
 
@@ -71,15 +71,17 @@ iPad 的 Safari 不能直接載入外掛檔案，這裡改用免費的 Userscrip
 
 Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤，書籤會載入同一份程式。第一張圖要等幾秒。
 
+書籤只能用在 OAuth 登入頁。校務資訊系統登入頁只允許載入同一個網站的程式，Chrome 會擋下書籤要從外面載入的程式，點了只會跳出提示。要在這頁自動填入，請用電腦或 iPad。
+
 1. 複製下面整行：
 
    ```
-   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/bookmarklet/nthu-oauth-captcha.js';document.body.appendChild(s);})()
+   javascript:(()=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/gordan12/nthu-oauth-captcha@latest/bookmarklet/nthu-oauth-captcha.js';s.onerror=()=>alert('程式載入失敗。校務資訊系統登入頁不支援書籤，請改用電腦或iPad；其他頁面請檢查網路後再試。');document.body.appendChild(s);})()
    ```
 
 2. 在 Chrome 隨便打開一個網頁，按右上角**選單 → 星號**加入書籤。
 3. 按**選單 → 書籤**，找到剛剛那個書籤，長按後選**編輯**。名稱改成好打的字，例如 `nthucaptcha`；網址整個刪掉，貼上第 1 步複製的那行，存檔。
-4. 打開清大校務資訊系統或 OAuth 登入頁，點網址列，輸入 `nthucaptcha`，點建議清單裡有星號的那一項。從書籤選單直接點不會執行，一定要從網址列點。
+4. 打開 OAuth 登入頁，點網址列，輸入 `nthucaptcha`，點建議清單裡有星號的那一項。從書籤選單直接點不會執行，一定要從網址列點。
 5. 驗證碼下方出現「驗證碼已填入」後，確認帳號密碼，再按登入。
 
 書籤不會自己執行，每次打開登入頁都要點一次。在別的網頁點，只會跳出提示。
@@ -104,6 +106,8 @@ Android 的 Chrome 不能裝外掛，這裡改用書籤：在登入頁點書籤�
 
 - 校務資訊系統登入頁 `https://www.ccxp.nthu.edu.tw/ccxp/INQUIRE/`，6 位數驗證碼。這頁沒有換圖按鈕，沒填對就重新整理頁面。
 - OAuth 登入頁 `https://oauth.ccxp.nthu.edu.tw/v1.1/authorize.php`，4 位數驗證碼，例如 eeclass、elearn 這類用清大帳號登入的網站。
+
+Android 的書籤只能用在 OAuth 登入頁。
 
 </details>
 
